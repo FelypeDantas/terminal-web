@@ -1,62 +1,381 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Explorer+</title>
-<link rel="stylesheet" href="/static/style.css">
+  <meta charset="utf-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <meta
+    name="description"
+    content="Explorer+ é um gerenciador de pastas e arquivos com pesquisa avançada e organização visual."
+  >
+
+  <title>Explorer+</title>
+
+  <link rel="stylesheet" href="/static/style.css">
 </head>
+
 <body>
-<div class="app">
-  <header class="topbar">
-    <div class="brand"><span class="brand-icon">📁</span><div><strong>Explorer+</strong><small>Seu gerenciador de pastas, sem as limitações do Explorer</small></div></div>
-    <div class="top-actions">
-      <button id="refreshBtn" class="icon-btn" title="Atualizar">↻</button>
-      <button id="settingsBtn" class="icon-btn" title="Configurações">⚙</button>
-    </div>
-  </header>
+  <div class="app">
 
-  <section class="searchbar">
-    <span>⌕</span>
-    <input id="searchInput" autocomplete="off" placeholder="Pesquisar pastas e arquivos... digite quantas letras quiser">
-    <kbd>Ctrl</kbd><kbd>K</kbd>
-    <button id="clearSearch" class="clear hidden">×</button>
-  </section>
+    <!-- =========================================================
+         CABEÇALHO
+         ========================================================= -->
+    <header class="topbar">
 
-  <main class="layout">
-    <aside class="sidebar">
-      <button class="nav active" data-view="home">⌂ <span>Início</span></button>
-      <button class="nav" data-view="favorites">★ <span>Favoritos</span></button>
-      <button class="nav" data-view="highlights">🎨 <span>Pastas destacadas</span></button>
-      <div class="side-title">ACESSOS</div>
-      <div id="roots"></div>
-      <div class="side-title">FERRAMENTAS</div>
-      <button class="nav" id="chooseRootBtn">＋ <span>Adicionar local</span></button>
-      <div class="side-note">O servidor local acessa os caminhos permitidos no computador. Isso permite trabalhar com pastas de rede sem depender do índice de pesquisa do Explorer.</div>
-    </aside>
+      <a
+        href="#"
+        class="brand"
+        aria-label="Explorer+ - Início"
+      >
+        <span
+          class="brand-icon"
+          aria-hidden="true"
+        >
+          📁
+        </span>
 
-    <section class="content">
-      <div class="toolbar">
-        <div class="breadcrumbs" id="breadcrumbs"></div>
-        <div class="view-actions">
-          <button id="upBtn" title="Subir">↑</button>
-          <button id="newFolderBtn" title="Nova pasta">＋ Pasta</button>
-          <button id="sortBtn">Ordenar: Nome ▾</button>
-        </div>
+        <span class="brand-text">
+          <strong>Explorer+</strong>
+          <small>
+            Seu gerenciador de pastas, sem as limitações do Explorer
+          </small>
+        </span>
+      </a>
+
+      <div class="top-actions">
+
+        <button
+          id="refreshBtn"
+          type="button"
+          class="icon-btn"
+          title="Atualizar"
+          aria-label="Atualizar"
+        >
+          ↻
+        </button>
+
+        <button
+          id="settingsBtn"
+          type="button"
+          class="icon-btn"
+          title="Configurações"
+          aria-label="Abrir configurações"
+        >
+          ⚙
+        </button>
+
+      </div>
+    </header>
+
+
+    <!-- =========================================================
+         PESQUISA GLOBAL
+         ========================================================= -->
+    <section
+      class="searchbar"
+      aria-label="Pesquisa"
+    >
+
+      <span
+        class="search-icon"
+        aria-hidden="true"
+      >
+        ⌕
+      </span>
+
+      <input
+        id="searchInput"
+        type="search"
+        autocomplete="off"
+        spellcheck="false"
+        placeholder="Pesquisar pastas e arquivos... digite quantas letras quiser"
+        aria-label="Pesquisar pastas e arquivos"
+      >
+
+      <div
+        class="search-shortcut"
+        aria-label="Atalho de teclado"
+      >
+        <kbd>Ctrl</kbd>
+        <kbd>K</kbd>
       </div>
 
-      <div id="status" class="status"></div>
-      <div id="results" class="results"></div>
-    </section>
-  </main>
-</div>
+      <button
+        id="clearSearch"
+        type="button"
+        class="clear hidden"
+        title="Limpar pesquisa"
+        aria-label="Limpar pesquisa"
+      >
+        ×
+      </button>
 
-<div id="modal" class="modal hidden">
-  <div class="modal-card">
-    <div class="modal-head"><h3 id="modalTitle">Destaque da pasta</h3><button id="closeModal">×</button></div>
-    <div id="modalBody"></div>
+    </section>
+
+
+    <!-- =========================================================
+         ESTRUTURA PRINCIPAL
+         ========================================================= -->
+    <main class="layout">
+
+      <!-- =======================================================
+           BARRA LATERAL
+           ======================================================= -->
+      <aside
+        class="sidebar"
+        aria-label="Navegação"
+      >
+
+        <!-- Navegação principal -->
+        <nav class="sidebar-nav">
+
+          <button
+            class="nav active"
+            type="button"
+            data-view="home"
+          >
+            <span
+              class="nav-icon"
+              aria-hidden="true"
+            >
+              ⌂
+            </span>
+
+            <span class="nav-label">
+              Início
+            </span>
+          </button>
+
+
+          <button
+            class="nav"
+            type="button"
+            data-view="favorites"
+          >
+            <span
+              class="nav-icon"
+              aria-hidden="true"
+            >
+              ★
+            </span>
+
+            <span class="nav-label">
+              Favoritos
+            </span>
+          </button>
+
+
+          <button
+            class="nav"
+            type="button"
+            data-view="highlights"
+          >
+            <span
+              class="nav-icon"
+              aria-hidden="true"
+            >
+              🎨
+            </span>
+
+            <span class="nav-label">
+              Pastas destacadas
+            </span>
+          </button>
+
+        </nav>
+
+
+        <!-- Locais adicionados -->
+        <section class="sidebar-section">
+
+          <h2 class="side-title">
+            ACESSOS
+          </h2>
+
+          <div
+            id="roots"
+            class="roots"
+            aria-label="Locais adicionados"
+          >
+            <!-- Os locais serão inseridos pelo JavaScript -->
+          </div>
+
+        </section>
+
+
+        <!-- Ferramentas -->
+        <section class="sidebar-section">
+
+          <h2 class="side-title">
+            FERRAMENTAS
+          </h2>
+
+          <button
+            id="chooseRootBtn"
+            type="button"
+            class="nav"
+          >
+            <span
+              class="nav-icon"
+              aria-hidden="true"
+            >
+              ＋
+            </span>
+
+            <span class="nav-label">
+              Adicionar local
+            </span>
+          </button>
+
+        </section>
+
+
+        <!-- Informações -->
+        <footer class="sidebar-footer">
+
+          <p class="side-note">
+            O servidor local acessa os caminhos permitidos no computador.
+            Isso permite trabalhar com pastas de rede sem depender do índice
+            de pesquisa do Explorer.
+          </p>
+
+        </footer>
+
+      </aside>
+
+
+      <!-- =======================================================
+           CONTEÚDO
+           ======================================================= -->
+      <section
+        class="content"
+        aria-label="Conteúdo do Explorer+"
+      >
+
+        <!-- Barra de ferramentas -->
+        <header class="toolbar">
+
+          <nav
+            id="breadcrumbs"
+            class="breadcrumbs"
+            aria-label="Localização atual"
+          >
+            <!-- Breadcrumbs inseridos pelo JavaScript -->
+          </nav>
+
+
+          <div class="view-actions">
+
+            <button
+              id="upBtn"
+              type="button"
+              title="Subir uma pasta"
+              aria-label="Subir uma pasta"
+            >
+              ↑
+            </button>
+
+
+            <button
+              id="newFolderBtn"
+              type="button"
+              title="Criar nova pasta"
+            >
+              ＋ Pasta
+            </button>
+
+
+            <button
+              id="sortBtn"
+              type="button"
+              aria-haspopup="menu"
+              aria-expanded="false"
+            >
+              Ordenar: Nome ▾
+            </button>
+
+          </div>
+
+        </header>
+
+
+        <!-- Status da navegação/pesquisa -->
+        <div
+          id="status"
+          class="status"
+          role="status"
+          aria-live="polite"
+        >
+        </div>
+
+
+        <!-- Resultados -->
+        <section
+          id="results"
+          class="results"
+          aria-label="Resultados"
+          aria-live="polite"
+        >
+          <!--
+            Os arquivos e pastas serão inseridos pelo JavaScript.
+          -->
+        </section>
+
+      </section>
+
+    </main>
+
   </div>
-</div>
-<script src="/static/app.js"></script>
+
+
+  <!-- ===========================================================
+       MODAL
+       =========================================================== -->
+  <dialog
+    id="modal"
+    class="modal"
+    aria-labelledby="modalTitle"
+  >
+
+    <div class="modal-card">
+
+      <header class="modal-head">
+
+        <h2 id="modalTitle">
+          Destaque da pasta
+        </h2>
+
+        <button
+          id="closeModal"
+          type="button"
+          class="icon-btn"
+          title="Fechar"
+          aria-label="Fechar"
+        >
+          ×
+        </button>
+
+      </header>
+
+
+      <div
+        id="modalBody"
+        class="modal-body"
+      >
+        <!-- Conteúdo dinâmico do modal -->
+      </div>
+
+    </div>
+
+  </dialog>
+
+  <!-- ===========================================================
+       JAVASCRIPT
+       =========================================================== -->
+  <script src="/static/app.js"></script>
+
 </body>
 </html>
