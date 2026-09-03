@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Explorer+</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><span class="brand-icon">📁</span><div><strong>Explorer+</strong><small>Seu gerenciador de pastas, sem as limitações do Explorer</small></div></div>
+    <div class="top-actions">
+      <button id="refreshBtn" class="icon-btn" title="Atualizar">↻</button>
+      <button id="settingsBtn" class="icon-btn" title="Configurações">⚙</button>
+    </div>
+  </header>
+
+  <section class="searchbar">
+    <span>⌕</span>
+    <input id="searchInput" autocomplete="off" placeholder="Pesquisar pastas e arquivos... digite quantas letras quiser">
+    <kbd>Ctrl</kbd><kbd>K</kbd>
+    <button id="clearSearch" class="clear hidden">×</button>
+  </section>
+
+  <main class="layout">
+    <aside class="sidebar">
+      <button class="nav active" data-view="home">⌂ <span>Início</span></button>
+      <button class="nav" data-view="favorites">★ <span>Favoritos</span></button>
+      <button class="nav" data-view="highlights">🎨 <span>Pastas destacadas</span></button>
+      <div class="side-title">ACESSOS</div>
+      <div id="roots"></div>
+      <div class="side-title">FERRAMENTAS</div>
+      <button class="nav" id="chooseRootBtn">＋ <span>Adicionar local</span></button>
+      <div class="side-note">O servidor local acessa os caminhos permitidos no computador. Isso permite trabalhar com pastas de rede sem depender do índice de pesquisa do Explorer.</div>
+    </aside>
+
+    <section class="content">
+      <div class="toolbar">
+        <div class="breadcrumbs" id="breadcrumbs"></div>
+        <div class="view-actions">
+          <button id="upBtn" title="Subir">↑</button>
+          <button id="newFolderBtn" title="Nova pasta">＋ Pasta</button>
+          <button id="sortBtn">Ordenar: Nome ▾</button>
+        </div>
+      </div>
+
+      <div id="status" class="status"></div>
+      <div id="results" class="results"></div>
+    </section>
+  </main>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="modal-card">
+    <div class="modal-head"><h3 id="modalTitle">Destaque da pasta</h3><button id="closeModal">×</button></div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+<script src="/static/app.js"></script>
+</body>
+</html>
